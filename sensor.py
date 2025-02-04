@@ -2,12 +2,13 @@
 import logging
 
 from homeassistant.const import (
-    CONF_ACCESS_TOKEN,
-    ENERGY_KILO_WATT_HOUR,
-    POWER_WATT,
-    DEVICE_CLASS_POWER,
+    UnitOfPower,
+    PERCENTAGE,
+    LIGHT_LUX,
 )
-from . import DOMAIN, NatureRemoBase
+from homeassistant.util.unit_system import UnitOfTemperature
+from homeassistant.components.sensor.const import SensorDeviceClass
+from . import DOMAIN, NatureRemoBase, NatureRemoDeviceBase
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -19,13 +20,21 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     _LOGGER.debug("Setting up sensor platform.")
     coordinator = hass.data[DOMAIN]["coordinator"]
     appliances = coordinator.data["appliances"]
-    async_add_entities(
-        [
-            NatureRemoE(coordinator, appliance)
-            for appliance in appliances.values()
-            if appliance["type"] == "EL_SMART_METER"
-        ]
-    )
+    devices = coordinator.data["devices"]
+    entities = [
+        NatureRemoE(coordinator, appliance)
+        for appliance in appliances.values()
+        if appliance["type"] == "EL_SMART_METER"
+    ]
+    for device in devices.values():
+        for sensor in device["newest_events"].keys():
+            if sensor == "te":
+                entities.append(NatureRemoTemperatureSensor(coordinator, device))
+            elif sensor == "hu":
+                entities.append(NatureRemoHumiditySensor(coordinator, device))
+            elif sensor == "il":
+                entities.append(NatureRemoIlluminanceSensor(coordinator, device))
+    async_add_entities(entities)
 
 
 class NatureRemoE(NatureRemoBase):
@@ -33,7 +42,7 @@ class NatureRemoE(NatureRemoBase):
 
     def __init__(self, coordinator, appliance):
         super().__init__(coordinator, appliance)
-        self._unit_of_measurement = POWER_WATT
+        self._unit_of_measurement = UnitOfPower.WATT
 
     @property
     def state(self):
@@ -50,12 +59,12 @@ class NatureRemoE(NatureRemoBase):
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement of this entity, if any."""
-        return self._unit_of_measurement
+        return UnitOfPower.WATT
 
     @property
     def device_class(self):
         """Return the device class."""
-        return DEVICE_CLASS_POWER
+        return SensorDeviceClass.power
 
     async def async_added_to_hass(self):
         """Subscribe to updates."""
@@ -69,3 +78,90 @@ class NatureRemoE(NatureRemoBase):
         Only used by the generic entity update service.
         """
         await self._coordinator.async_request_refresh()
+
+
+class NatureRemoTemperatureSensor(NatureRemoDeviceBase):
+    """Implementation of a Nature Remo sensor."""
+
+    def __init__(self, coordinator, appliance):
+        super().__init__(coordinator, appliance)
+        self._name = self._name.strip() + " Temperature"
+
+    @property
+    def unique_id(self):
+        """Return a unique ID."""
+        return self._device["id"] + "-te"
+
+    @property
+    def unit_of_measurement(self):
+        """Return the unit of measurement of this entity, if any."""
+        return UnitOfTemperature.CELSIUS
+
+    @property
+    def state(self):
+        """Return the state of the sensor."""
+        device = self._coordinator.data["devices"][self._device["id"]]
+        return device["newest_events"]["te"]["val"]
+
+    @property
+    def device_class(self):
+        """Return the device class."""
+        return SensorDeviceClass.TEMPERATURE
+
+
+class NatureRemoHumiditySensor(NatureRemoDeviceBase):
+    """Implementation of a Nature Remo sensor."""
+
+    def __init__(self, coordinator, appliance):
+        super().__init__(coordinator, appliance)
+        self._name = self._name.strip() + " Humidity"
+
+    @property
+    def unique_id(self):
+        """Return a unique ID."""
+        return self._device["id"] + "-hu"
+
+    @property
+    def unit_of_measurement(self):
+        """Return the unit of measurement of this entity, if any."""
+        return PERCENTAGE
+
+    @property
+    def state(self):
+        """Return the state of the sensor."""
+        device = self._coordinator.data["devices"][self._device["id"]]
+        return device["newest_events"]["hu"]["val"]
+
+    @property
+    def device_class(self):
+        """Return the device class."""
+        return SensorDeviceClass.HUMIDITY
+
+
+class NatureRemoIlluminanceSensor(NatureRemoDeviceBase):
+    """Implementation of a Nature Remo sensor."""
+
+    def __init__(self, coordinator, appliance):
+        super().__init__(coordinator, appliance)
+        self._name = self._name.strip() + " Illuminance"
+
+    @property
+    def unique_id(self):
+        """Return a unique ID."""
+        return self._device["id"] + "-il"
+
+    @property
+    def unit_of_measurement(self):
+        """Return the unit of measurement of this entity, if any."""
+        return LIGHT_LUX
+
+    @property
+    def state(self):
+        """Return the state of the sensor."""
+        device = self._coordinator.data["devices"][self._device["id"]]
+        return device["newest_events"]["il"]["val"]
+
+    @property
+    def device_class(self):
+        """Return the device class."""
+        return DEVICE_CLASS_ILLUMINANCE 
