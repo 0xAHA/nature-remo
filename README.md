@@ -27,38 +27,74 @@ Tested on Home Assistant Core 2021.3.3 on Docker
 
 ## Installation
 
+### HACS (Recommended)
+
+1. Install [HACS](https://hacs.xyz/)
+2. Add this repository as a custom repository in HACS
+3. Install "Nature Remo" from the HACS store
+4. Restart Home Assistant
+
 ### Manual Install
 
 1. Download this repository
-1. Create `custom_components/nature_remo` folder at your config directory
-1. Copy files into it (Just drag&drop whole files would be fine)
+2. Create `custom_components/nature_remo` folder at your config directory
+3. Copy files into it
 
 ```
 {path_to_your_config}
 ├── configuration.yaml
 └── custom_components
-    └── nature_remo
-        ├── __init__.py
-        ├── climate.py
-        ├── manifest.json
-        └── sensor.py
-```
-
-### Install via git submodule
-
-If you have set up git, you can also install this component by adding submodule to your git repository.
-
-```sh
-git submodule add https://github.com/yutoyazaki/hass-nature-remo.git {path_to_custom_component}/nature_remo
+    └── nature_remo
+        ├── __init__.py
+        ├── config_flow.py
+        ├── climate.py
+        ├── manifest.json
+        ├── sensor.py
+        ├── const.py
+        └── translations
+            └── en.json
 ```
 
 ## Configuration
 
+### UI Configuration (Recommended)
+
 1. Go to https://home.nature.global and sign in/up
-1. Generate access token
-1. Add following codes to your `configuration.yaml` file
+2. Generate access token
+3. In Home Assistant, go to Configuration → Integrations
+4. Click the "+ Add Integration" button
+5. Search for "Nature Remo"
+6. Enter your access token
+7. Click Submit
+
+### YAML Configuration (Legacy)
+
+⚠️ **Note**: YAML configuration is deprecated. Please use the UI configuration method instead.
+
+If you have existing YAML configuration, you will see a persistent notification suggesting to remove it. To migrate:
+
+1. Remove the Nature Remo configuration from your `configuration.yaml`
+2. Add the integration through the UI as described above
 
 ```yaml
+# Example of legacy YAML configuration (not recommended)
 nature_remo:
   access_token: YOUR_ACCESS_TOKEN
 ```
+
+## Troubleshooting
+
+If you encounter any issues:
+
+1. Check that your access token is correct
+2. Ensure your Nature Remo device is online
+3. Check the Home Assistant logs for any error messages
+4. Try restarting Home Assistant
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

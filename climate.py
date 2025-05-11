@@ -1,13 +1,29 @@
-"""Support for Nature Remo AC."""
+"""The Nature Remo climate platform."""
 import logging
+import voluptuous as vol
 
-from homeassistant.components.climate import ClimateEntity
-from homeassistant.components.climate.const import (ClimateEntityFeature,
-                                                    HVACMode)
-from homeassistant.const import ATTR_TEMPERATURE, UnitOfTemperature
-from homeassistant.core import callback
+from homeassistant.components.climate import (
+    ClimateEntity,
+    ClimateEntityFeature,
+    HVACAction,
+    HVACMode,
+)
+from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import (
+    ATTR_TEMPERATURE,
+    CONF_TEMPERATURE_UNIT,
+    UnitOfTemperature,
+)
+from homeassistant.core import HomeAssistant, callback
+from homeassistant.helpers.entity_platform import AddEntitiesCallback
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from . import CONF_COOL_TEMP, CONF_HEAT_TEMP, DOMAIN, NatureRemoBase
+from . import NatureRemoBase
+from .const import (
+    DOMAIN,
+    _CONF_COOL_TEMP,
+    _CONF_HEAT_TEMP,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -32,15 +48,17 @@ MODE_REMO_TO_HA = {
 }
 
 
-async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
-    """Set up the Nature Remo AC."""
-    if discovery_info is None:
-        return
-    _LOGGER.debug("Setting up climate platform.")
-    coordinator = hass.data[DOMAIN]["coordinator"]
-    api = hass.data[DOMAIN]["api"]
-    config = hass.data[DOMAIN]["config"]
+async def async_setup_entry(
+    hass: HomeAssistant,
+    entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
+) -> None:
+    """Set up Nature Remo climate based on config_entry."""
+    coordinator = hass.data[DOMAIN][entry.entry_id]["coordinator"]
+    api = hass.data[DOMAIN][entry.entry_id]["api"]
+    config = hass.data[DOMAIN][entry.entry_id]["config"]
     appliances = coordinator.data["appliances"]
+    
     async_add_entities(
         [
             NatureRemoAC(coordinator, api, appliance, config)
@@ -51,15 +69,15 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
 
 
 class NatureRemoAC(NatureRemoBase, ClimateEntity):
-    """Implementation of a Nature Remo E sensor."""
+    """Implementation of a Nature Remo AC."""
     _enable_turn_on_off_backwards_compatibility = False
 
     def __init__(self, coordinator, api, appliance, config):
         super().__init__(coordinator, appliance)
         self._api = api
         self._default_temp = {
-            HVACMode.COOL: config[CONF_COOL_TEMP],
-            HVACMode.HEAT: config[CONF_HEAT_TEMP],
+            HVACMode.COOL: config[_CONF_COOL_TEMP],
+            HVACMode.HEAT: config[_CONF_HEAT_TEMP],
         }
         self._modes = appliance["aircon"]["range"]["modes"]
         self._hvac_mode = None

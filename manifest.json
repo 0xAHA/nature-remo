@@ -1,10 +1,15 @@
 {
   "domain": "nature_remo",
   "name": "Nature Remo",
-  "version": "0.5",
-  "documentation": "https://github.com/yutoyazaki/hass-nature-remo",
-  "issue_tracker": "https://github.com/yutoyazaki/hass-nature-remo/issues",
+  "version": "0.0.6",
+  "documentation": "https://github.com/doenau/hass-nature-remo",
+  "issue_tracker": "https://github.com/doenau/hass-nature-remo/issues",
   "codeowners": [
-    "@yutoyazaki"
-  ]
+    "@yutoyazaki",
+    "@doenau"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "iot_class": "cloud_polling",
+  "requirements": ["aiofiles>=23.2.1"]
 }
