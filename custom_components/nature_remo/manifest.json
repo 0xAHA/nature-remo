@@ -2,8 +2,8 @@
   "domain": "nature_remo",
   "name": "Nature Remo",
   "codeowners": [
-    "@yutoyazaki",
-    "@doenau"
+    "@doenau",
+    "@yutoyazaki"
   ],
   "config_flow": true,
   "dependencies": [],
