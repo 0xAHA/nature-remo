@@ -1,12 +1,23 @@
-# Home Assistant integration for Nature Remo
+# 🌿🎮 Home Assistant integration for Nature Remo 🎮🌿
+
+---
+
+> ### 📢 FORK INFORMATION
+> 
+> This version is a fork from @yutoyazaki's integration, as at the current time it is not being maintained.  
+> This fork introduces the Home Assistant GUI configuration method, and also adds a configurable sensor refresh period.
+> 
+> **Note**: this was done for my own interest, and use of the Nature Remo Mini devices. Unfortunatley I cannont support this integration for any other Nature Remo devices.
+
+---
 
 Yet another [Home Assistant](https://www.home-assistant.io) component for [Nature Remo](https://en.nature.global/en/).
 
-⚠️This integration is neither Nature Remo official nor Home Assistant official. **Use at your own risk.** ⚠️
+⚠️ This integration is neither Nature Remo official nor Home Assistant official. **Use at your own risk.** ⚠️
 
 <img src="./assets/screenshot_1.png" width="600"><img src="./assets/screenshot_2.png" width="200">
 
-## Supported features
+## ✨ Supported features ✨
 
 - [x] Air Conditionar
   - [x] Set mode (e.g. cool, warm, blow etc.)
@@ -23,14 +34,17 @@ Yet another [Home Assistant](https://www.home-assistant.io) component for [Natur
 - [ ] Others
   - [ ] Fetch sensor data
 
-Tested on Home Assistant Core 2021.3.3 on Docker
+Tested on Home Assistant Core 2025.5.1
 
-## Installation
+## 🚀 Installation 🚀
 
 ### HACS (Recommended)
 
 1. Install [HACS](https://hacs.xyz/)
-2. Add this repository as a custom repository in HACS
+2. Add this repository as a custom repository in HACS - or simply click the button below.  
+
+&nbsp;&nbsp;&nbsp;&nbsp;[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=doenau&repository=https%3A%2F%2Fgithub.com%2Fdoenau%2Fnature-remo&category=Integration)
+
 3. Install "Nature Remo" from the HACS store
 4. Restart Home Assistant
 
@@ -55,7 +69,7 @@ Tested on Home Assistant Core 2021.3.3 on Docker
             └── en.json
 ```
 
-## Configuration
+## ⚙️ Configuration ⚙️
 
 ### UI Configuration (Recommended)
 
@@ -71,10 +85,7 @@ Tested on Home Assistant Core 2021.3.3 on Docker
 
 ⚠️ **Note**: YAML configuration is deprecated. Please use the UI configuration method instead.
 
-If you have existing YAML configuration, you will see a persistent notification suggesting to remove it. To migrate:
-
-1. Remove the Nature Remo configuration from your `configuration.yaml`
-2. Add the integration through the UI as described above
+If you have existing YAML configuration, it will be automatically imported. You will see a persistent notification suggesting to remove the following YAML configuration from you configuration.yaml. 
 
 ```yaml
 # Example of legacy YAML configuration (not recommended)
@@ -82,7 +93,7 @@ nature_remo:
   access_token: YOUR_ACCESS_TOKEN
 ```
 
-## Troubleshooting
+## 🔧 Troubleshooting 🔧
 
 If you encounter any issues:
 
@@ -91,10 +102,10 @@ If you encounter any issues:
 3. Check the Home Assistant logs for any error messages
 4. Try restarting Home Assistant
 
-## Contributing
+## 🤝 Contributing 🤝
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
+## 📄 License 📄
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
