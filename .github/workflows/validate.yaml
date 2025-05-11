@@ -15,5 +15,5 @@ jobs:
         uses: "hacs/action@main"
         with:
           category: "integration"
-          repository: doenau/hass-nature-remo
+          repository: doenau/nature-remo
           github_token: ${{ secrets.GITHUB_TOKEN }}
