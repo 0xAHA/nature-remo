@@ -15,7 +15,7 @@ Yet another [Home Assistant](https://www.home-assistant.io) component for [Natur
 
 ⚠️ This integration is neither Nature Remo official nor Home Assistant official. **Use at your own risk.** ⚠️
 
-<img src="./assets/screenshot_1.png" width="600"><img src="./assets/screenshot_2.png" width="200">
+<img src="https://github.com/doenau/nature-remo/blob/main/assets/screenshot_1.png" width="600"><img src="https://github.com/doenau/nature-remo/blob/main/assets/screenshot_2.png" width="200">
 
 ## ✨ Supported features ✨
 
@@ -41,10 +41,7 @@ Tested on Home Assistant Core 2025.5.1
 ### HACS (Recommended)
 
 1. Install [HACS](https://hacs.xyz/)
-2. Add this repository as a custom repository in HACS - or simply click the button below.  
-
-&nbsp;&nbsp;&nbsp;&nbsp;[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=doenau&repository=https%3A%2F%2Fgithub.com%2Fdoenau%2Fnature-remo&category=Integration)
-
+2. Add this repository as a custom repository in HACS
 3. Install "Nature Remo" from the HACS store
 4. Restart Home Assistant
 
