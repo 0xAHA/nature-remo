@@ -2,14 +2,14 @@
   "domain": "nature_remo",
   "name": "Nature Remo",
   "codeowners": [
-    "@doenau",
+    "@0xAHA",
     "@yutoyazaki"
   ],
   "config_flow": true,
   "dependencies": [],
-  "documentation": "https://github.com/doenau/nature-remo",
+  "documentation": "https://github.com/0xAHA/nature-remo",
   "iot_class": "cloud_polling",
-  "issue_tracker": "https://github.com/doenau/nature-remo/issues",
+  "issue_tracker": "https://github.com/0xAHA/nature-remo/issues",
   "requirements": ["aiofiles>=23.2.1"],
   "version": "0.0.6"
 }

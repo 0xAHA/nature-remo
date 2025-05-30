@@ -15,7 +15,7 @@ Yet another [Home Assistant](https://www.home-assistant.io) component for [Natur
 
 ⚠️ This integration is neither Nature Remo official nor Home Assistant official. **Use at your own risk.** ⚠️
 
-<img src="https://github.com/doenau/nature-remo/blob/main/assets/screenshot_1.png" width="600"><img src="https://github.com/doenau/nature-remo/blob/main/assets/screenshot_2.png" width="200">
+<img src="https://github.com/0xAHA/nature-remo/blob/main/assets/screenshot_1.png" width="600"><img src="https://github.com/0xAHA/nature-remo/blob/main/assets/screenshot_2.png" width="200">
 
 ## ✨ Supported features ✨
 
